@@ -1,8 +1,8 @@
 <template>
-  <v-container class="fill-screen py-8 scrollable-container" style="min-height: 400px; min-width: 320px;">
-    <v-row justify="center" align="center" class="mb-6 fill-screen-row">
-      <v-col cols="12" md="8" class="fill-screen-col">
-        <v-card class="fill-screen-card">
+  <v-container class="fill-screen py-8">
+    <v-row justify="center" align="center" class="mb-6">
+      <v-col cols="12" md="8">
+        <v-card class="scrollable-container mx-auto">
           <v-card-title class="text-h5">天气预览</v-card-title>
           <v-card-text>
             <v-alert v-if="error" type="error" class="mb-4">
@@ -121,25 +121,10 @@ const displayTemp = computed(() => {
 .scrollable-container {
   overflow-y: auto;
   max-height: 100vh;
-}
-.fill-screen-row {
-  height: 100%;
-}
-.fill-screen-col {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.fill-screen-card {
   width: 100%;
-  min-height: 400px;
-  min-width: 320px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  box-sizing: border-box;
 }
+
 .text-h4 {
   font-size: 2rem;
 }
