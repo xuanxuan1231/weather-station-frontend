@@ -2,7 +2,7 @@
   <v-container class="fill-screen py-8">
     <v-row justify="center" align="center" class="mb-6">
       <v-col cols="12" md="8">
-        <v-card class="scrollable-container mx-auto">
+        <v-card class="scrollable-container mx-auto card">
           <v-card-title class="text-h5">天气预览</v-card-title>
           <v-card-text>
             <v-alert v-if="error" type="error" class="mb-4">
@@ -10,16 +10,27 @@
             </v-alert>
             <v-row>
               <v-col cols="12" sm="6" md="3" v-for="item in categories" :key="item.key">
-                <v-sheet class="pa-4 text-center" elevation="2">
-                  <div class="text-h6 mb-2">{{ item.label }}</div>
+                <v-sheet class="pa-4 text-center card" elevation="2">
+                  <div class="weather-icon-wrapper">
+                    <component :is="item.icon" class="weather-icon" />
+                  </div>
+
                   <div v-if="item.key === 'temp'">
-                    <span class="text-h4 font-weight-bold">{{ displayTemp }}</span>
-                    <span class="ml-1">°{{ tempUnit }}</span>
-                    <v-btn size="x-small" variant="text" @click="toggleTempUnit">切换单位</v-btn>
+                    <div class="text-h6 mb-2 temp-label">{{ item.label }}</div>
+                    <div class="value-unit temp">
+                      <span class="temp-value">{{ displayTemp }}</span>
+                      <span class="temp-unit">°{{ tempUnit }}</span>
+                    </div>
+                    <div class="unit-switcher mt-2">
+                      <v-btn size="x-small" variant="text" @click="toggleTempUnit">切换单位</v-btn>
+                    </div>
                   </div>
                   <div v-else>
-                    <span class="text-h4 font-weight-bold">{{ weather[item.key] ?? '--' }}</span>
-                    <span class="ml-1">{{ item.unit }}</span>
+                    <div class="text-h6 mb-2">{{ item.label }}</div>
+                    <div class="value-unit">
+                    <span class="value">{{ weather[item.key] ?? '--' }}</span>
+                    <span class="unit">{{ item.unit }}</span>
+                    </div>
                   </div>
                   <div class="mt-2 text-caption grey--text" v-if="time[item.key]">
                     更新时间：{{ time[item.key] }}
@@ -36,12 +47,19 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { mdiThermometer, mdiWeatherWindy, mdiWeatherDust, mdiWaterPercent } from '@mdi/js'
+import { h, defineAsyncComponent } from 'vue'
+
+const IconTemp = defineAsyncComponent(() => import('vue-material-design-icons/Thermometer.vue'))
+const IconPressure = defineAsyncComponent(() => import('vue-material-design-icons/WeatherWindy.vue'))
+const IconPM25 = defineAsyncComponent(() => import('vue-material-design-icons/WeatherDust.vue'))
+const IconHumidity = defineAsyncComponent(() => import('vue-material-design-icons/WaterPercent.vue'))
 
 const categories = [
-  { key: 'temp', label: '温度', unit: 'C' },
-  { key: 'pressure', label: '大气压强', unit: 'hPa' },
-  { key: 'pm2_5', label: 'PM2.5', unit: 'μg/m³' },
-  { key: 'humidity', label: '湿度', unit: '%' },
+  { key: 'temp', label: '温度', unit: 'C', icon: IconTemp },
+  { key: 'pressure', label: '大气压强', unit: 'hPa', icon: IconPressure },
+  { key: 'pm2_5', label: 'PM2.5', unit: 'μg/m³', icon: IconPM25 },
+  { key: 'humidity', label: '湿度', unit: '%', icon: IconHumidity },
 ]
 
 const weather = ref({})
@@ -117,15 +135,118 @@ const displayTemp = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--md-background);
+  color: var(--md-on-background);
 }
 .scrollable-container {
   overflow-y: auto;
   max-height: 100vh;
   width: 100%;
   box-sizing: border-box;
+  background: var(--md-surface);
+  color: var(--md-on-surface);
 }
-
 .text-h4 {
+  font-size: 2.6rem;
+  color: var(--md-primary);
+  line-height: 1.1;
+}
+.value-unit {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.25em;
+}
+.value-unit .value {
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: var(--md-primary);
+  line-height: 1.1;
+}
+.value-unit .temp-value {
   font-size: 2rem;
+  font-weight: bold;
+  color: var(--md-primary);
+  line-height: 1.1;
+}
+.value-unit .unit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--md-primary);
+  margin-bottom: 0.2em;
+}
+.value-unit .temp-unit {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--md-primary);
+  margin-left: 0.5em;
+}
+.v-sheet {
+  background: var(--md-surface) !important;
+  color: var(--md-on-surface) !important;
+  border-radius: 4px;
+  border: 1px solid var(--md-primary);
+  box-shadow: 0 2px 8px 0 rgba(98,0,234,0.10), 0 1.5px 6px 0 rgba(0,0,0,0.10);
+  transition: box-shadow 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  height: 100%;
+}
+.unit-switcher {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1px !important;
+}
+.card:hover {
+  box-shadow: 0 6px 24px 0 rgba(98,0,234,0.18), 0 3px 12px 0 rgba(0,0,0,0.18);
+}
+.v-btn {
+  color: var(--md-primary) !important;
+}
+.v-alert {
+  background: var(--md-error) !important;
+  color: var(--md-on-error) !important;
+}
+.v-alert .v-alert__icon,
+.v-alert .v-alert__content {
+  color: var(--md-on-error) !important;
+}
+.text-caption {
+  color: var(--md-secondary) !important;
+}
+.v-card-title {
+  color: var(--md-on-primary) !important;
+  background: var(--md-primary) !important;
+  height: 64px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 0 24px;
+  margin-bottom: 16px;
+}
+.temp-label {
+  margin-bottom: 0 !important;
+}
+.weather-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.weather-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--md-primary);
 }
 </style>
