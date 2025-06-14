@@ -71,7 +71,7 @@ const fetchWeather = async (key) => {
         const beijingDate = new Date(utcDate.getTime() + 8 * 60 * 60 * 1000)
         // 格式化为 YYYY-MM-DD HH:mm:ss
         const pad = n => n.toString().padStart(2, '0')
-        time.value = `${beijingDate.getFullYear()}-${pad(beijingDate.getMonth() + 1)}-${pad(beijingDate.getDate())} ${pad(beijingDate.getHours())}:${pad(beijingDate.getMinutes())}:${pad(beijingDate.getSeconds())}`
+        time.value[key] = `${beijingDate.getFullYear()}-${pad(beijingDate.getMonth() + 1)}-${pad(beijingDate.getDate())} ${pad(beijingDate.getHours())}:${pad(beijingDate.getMinutes())}:${pad(beijingDate.getSeconds())}`
       }
     } else if (data.status === 1) {
       weather.value[key] = '--'
