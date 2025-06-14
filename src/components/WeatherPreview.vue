@@ -21,8 +21,8 @@
                     <span class="text-h4 font-weight-bold">{{ weather[item.key] ?? '--' }}</span>
                     <span class="ml-1">{{ item.unit }}</span>
                   </div>
-                  <div class="mt-2 text-caption grey--text" v-if="time">
-                    更新时间：{{ time }}
+                  <div class="mt-2 text-caption grey--text" v-if="time[item.key]">
+                    更新时间：{{ time[item.key] }}
                   </div>
                 </v-sheet>
               </v-col>
@@ -48,7 +48,7 @@ const weather = ref({})
 const tempUnit = ref('C')
 const error = ref(false)
 const errorMsg = ref('')
-const time = ref('')
+const time = ref({})
 
 const fetchWeather = async (key) => {
   try {
@@ -60,7 +60,7 @@ const fetchWeather = async (key) => {
       weather.value[key] = '--'
       error.value = true
       errorMsg.value = '接口响应体解析失败'
-      time.value = '2000-1-1 00:00:00'
+      time.value[key] = '2000-1-1 00:00:00'
       return
     }
     if (data.status === 0) {
@@ -77,18 +77,18 @@ const fetchWeather = async (key) => {
       weather.value[key] = '--'
       error.value = true
       errorMsg.value = data.error || '接口返回错误'
-      time.value = '1970-1-1 08:00:00'
+      time.value[key] = '1970-1-1 08:00:00'
     } else {
       weather.value[key] = '--'
       error.value = true
       errorMsg.value = '未知错误'
-      time.value = '1970-1-1 08:00:00'
+      time.value[key] = '1970-1-1 08:00:00'
     }
   } catch (e) {
     weather.value[key] = '--'
     error.value = true
     errorMsg.value = e.message || '接口异常'
-    time.value = '1970-1-1 08:00:00'
+    time.value[key] = '1970-1-1 08:00:00'
   }
 }
 
