@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-screen py-8" style="min-height: 400px; min-width: 320px;">
+  <v-container class="fill-screen py-8 scrollable-container" style="min-height: 400px; min-width: 320px;">
     <v-row justify="center" align="center" class="mb-6 fill-screen-row">
       <v-col cols="12" md="8" class="fill-screen-col">
         <v-card class="fill-screen-card">
@@ -117,6 +117,10 @@ const displayTemp = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.scrollable-container {
+  overflow-y: auto;
+  max-height: 100vh;
 }
 .fill-screen-row {
   height: 100%;
