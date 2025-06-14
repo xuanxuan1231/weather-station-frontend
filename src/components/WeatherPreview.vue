@@ -39,7 +39,7 @@ import { ref, onMounted, computed } from 'vue'
 
 const categories = [
   { key: 'temp', label: '温度', unit: 'C' },
-  { key: 'pressure', label: '大气压力', unit: 'hPa' },
+  { key: 'pressure', label: '大气压强', unit: 'hPa' },
   { key: 'pm2_5', label: 'PM2.5', unit: 'μg/m³' },
   { key: 'humidity', label: '湿度', unit: '%' },
 ]
