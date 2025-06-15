@@ -1,7 +1,12 @@
 {
-  "name": "weather-frontend",
-  "version": "0.0.0",
+  "name": "weather-station-frontend",
+  "description": "物联网“气象站”前端",
+  "version": "1.0.0",
   "private": true,
+  "author": {
+    "email": "bushigemen114@gmail.com",
+    "name": "Wenxuan Shen"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
