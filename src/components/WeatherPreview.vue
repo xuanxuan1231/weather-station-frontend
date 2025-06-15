@@ -24,17 +24,20 @@
                     <div class="unit-switcher mt-2">
                       <v-btn size="x-small" variant="text" @click="toggleTempUnit">切换单位</v-btn>
                     </div>
+                    <div class="mt-2 text-caption grey--text no-margin-top" v-if="time[item.key]">
+                      更新时间：{{ time[item.key] }}
+                    </div>
                   </div>
                   <div v-else>
                     <div class="text-h6 mb-2">{{ item.label }}</div>
                     <div class="value-unit">
                     <span class="value">{{ weather[item.key] ?? '--' }}</span>
                     <span class="unit">{{ item.unit }}</span>
-                    </div>
-                  </div>
-                  <div class="mt-2 text-caption grey--text" v-if="time[item.key]">
+                    </div><div class="mt-2 text-caption grey--text" v-if="time[item.key]">
                     更新时间：{{ time[item.key] }}
                   </div>
+                  </div>
+
                 </v-sheet>
               </v-col>
             </v-row>
@@ -164,7 +167,7 @@ const displayTemp = computed(() => {
   line-height: 1.1;
 }
 .value-unit .temp-value {
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: bold;
   color: var(--md-primary);
   line-height: 1.1;
@@ -176,7 +179,7 @@ const displayTemp = computed(() => {
   margin-bottom: 0.2em;
 }
 .value-unit .temp-unit {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--md-primary);
   margin-left: 0.5em;
@@ -237,6 +240,9 @@ const displayTemp = computed(() => {
 }
 .temp-label {
   margin-bottom: 0 !important;
+}
+.no-margin-top {
+  margin-top: 0 !important;
 }
 .weather-icon-wrapper {
   display: flex;
