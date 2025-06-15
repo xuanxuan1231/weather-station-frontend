@@ -3,17 +3,17 @@
     <v-row justify="center" align="center" class="mb-6">
       <v-col cols="12" md="8">
         <v-card class="scrollable-container mx-auto card">
-          <v-card-title class="text-h5">
+          <v-card-title class="v-card-title text-h5">
             天气预报<br>
             <span class="text-caption ml-4">{{ countdown }} 秒后刷新</span>
           </v-card-title>
           <v-card-text>
-            <v-alert v-if="error" type="error" class="mb-4">
+            <v-alert v-if="error" type="error" class="v-alert mb-4">
               {{ errorMsg }}
             </v-alert>
             <v-row>
               <v-col cols="12" sm="6" md="3" v-for="item in categories" :key="item.key">
-                <v-sheet class="pa-4 text-center card" elevation="2">
+                <v-sheet class="v-sheet pa-4 text-center card" elevation="2">
                   <div class="weather-icon-wrapper">
                     <component :is="item.icon" class="weather-icon" />
                   </div>
@@ -25,7 +25,7 @@
                       <span class="temp-unit">°{{ tempUnit }}</span>
                     </div>
                     <div class="unit-switcher mt-2">
-                      <v-btn size="x-small" variant="text" @click="toggleTempUnit">切换单位</v-btn>
+                      <v-btn class="v-btn" size="x-small" variant="text" @click="toggleTempUnit">切换单位</v-btn>
                     </div>
                     <div class="mt-2 text-caption grey--text no-margin-top" v-if="time[item.key]">
                       更新时间：{{ time[item.key] }}
@@ -170,11 +170,6 @@ const displayTemp = computed(() => {
   background: var(--md-surface);
   color: var(--md-on-surface);
 }
-.text-h4 {
-  font-size: 2.6rem;
-  color: var(--md-primary);
-  line-height: 1.1;
-}
 .value-unit {
   display: flex;
   align-items: flex-end;
@@ -234,10 +229,6 @@ const displayTemp = computed(() => {
 }
 .v-alert {
   background: var(--md-error) !important;
-  color: var(--md-on-error) !important;
-}
-.v-alert .v-alert__icon,
-.v-alert .v-alert__content {
   color: var(--md-on-error) !important;
 }
 .text-caption {
