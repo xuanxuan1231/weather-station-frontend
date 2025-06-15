@@ -3,7 +3,10 @@
     <v-row justify="center" align="center" class="mb-6">
       <v-col cols="12" md="8">
         <v-card class="scrollable-container mx-auto card">
-          <v-card-title class="text-h5">天气预览</v-card-title>
+          <v-card-title class="text-h5">
+            天气预报<br>
+            <span class="text-caption ml-4">{{ countdown }} 秒后刷新</span>
+          </v-card-title>
           <v-card-text>
             <v-alert v-if="error" type="error" class="mb-4">
               {{ errorMsg }}
@@ -49,9 +52,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { mdiThermometer, mdiWeatherWindy, mdiWeatherDust, mdiWaterPercent } from '@mdi/js'
-import { h, defineAsyncComponent } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 const IconTemp = defineAsyncComponent(() => import('vue-material-design-icons/Thermometer.vue'))
 const IconPressure = defineAsyncComponent(() => import('vue-material-design-icons/WeatherWindy.vue'))
@@ -70,6 +72,9 @@ const tempUnit = ref('C')
 const error = ref(false)
 const errorMsg = ref('')
 const time = ref({})
+const countdown = ref(30)
+let timer = null
+let interval = null
 
 const fetchWeather = async (key) => {
   try {
@@ -113,8 +118,24 @@ const fetchWeather = async (key) => {
   }
 }
 
-onMounted(() => {
+const refreshAll = () => {
   categories.forEach(cat => fetchWeather(cat.key))
+}
+
+onMounted(() => {
+  refreshAll()
+  timer = setInterval(() => {
+    refreshAll()
+    countdown.value = 30
+  }, 30000)
+  interval = setInterval(() => {
+    if (countdown.value > 0) countdown.value--
+  }, 1000)
+})
+
+onUnmounted(() => {
+  clearInterval(timer)
+  clearInterval(interval)
 })
 
 const toggleTempUnit = () => {
