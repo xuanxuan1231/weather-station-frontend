@@ -57,13 +57,11 @@ import { defineAsyncComponent } from 'vue'
 
 const IconTemp = defineAsyncComponent(() => import('vue-material-design-icons/Thermometer.vue'))
 const IconPressure = defineAsyncComponent(() => import('vue-material-design-icons/WeatherWindy.vue'))
-const IconPM25 = defineAsyncComponent(() => import('vue-material-design-icons/WeatherDust.vue'))
 const IconHumidity = defineAsyncComponent(() => import('vue-material-design-icons/WaterPercent.vue'))
 
 const categories = [
   { key: 'temp', label: '温度', unit: 'C', icon: IconTemp },
   { key: 'pressure', label: '大气压强', unit: 'hPa', icon: IconPressure },
-  { key: 'pm2_5', label: 'PM2.5', unit: 'μg/m³', icon: IconPM25 },
   { key: 'humidity', label: '湿度', unit: '%', icon: IconHumidity },
 ]
 
