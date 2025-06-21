@@ -1,19 +1,19 @@
 <template>
   <v-container class="fill-screen py-8">
     <v-row justify="center" align="center" class="mb-6">
-      <v-col cols="12" md="8">
+      <v-col cols="9" md="6">
         <v-card class="scrollable-container mx-auto card">
           <v-card-title class="v-card-title text-h5">
-            天气预报<br>
+            天气预览<br>
             <span class="text-caption ml-4">{{ countdown }} 秒后刷新</span>
           </v-card-title>
           <v-card-text>
             <v-alert v-if="error" type="error" class="v-alert mb-4">
               {{ errorMsg }}
             </v-alert>
-            <v-row>
-              <v-col cols="12" sm="6" md="3" v-for="item in categories" :key="item.key">
-                <v-sheet class="v-sheet pa-4 text-center card" elevation="2">
+            <v-row class="fill-height">
+              <v-col cols="4" sm="4" md="4" v-for="item in categories" :key="item.key" class="d-flex">
+                <v-sheet class="v-sheet pa-4 text-center card fill-height" elevation="2">
                   <div class="weather-icon-wrapper">
                     <component :is="item.icon" class="weather-icon" />
                   </div>
